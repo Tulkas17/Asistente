@@ -1,11 +1,11 @@
-package service;
+package cr.ac.una.springbootaopmaven.service;
 
 import cr.ac.una.springbootaopmaven.entity.Tarea;
 import cr.ac.una.springbootaopmaven.repository.TareaRepository;
 import org.jpl7.Term;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import prolog.PrologEngine;
+import cr.ac.una.springbootaopmaven.prolog.PrologEngine;
 
 import java.util.*;
 import java.util.stream.Collectors;

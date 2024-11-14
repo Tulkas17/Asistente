@@ -1,4 +1,4 @@
-package prolog;
+package cr.ac.una.springbootaopmaven.prolog;
 
 
 import org.jpl7.Query;

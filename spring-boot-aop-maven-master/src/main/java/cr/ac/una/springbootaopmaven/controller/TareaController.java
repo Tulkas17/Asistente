@@ -3,7 +3,7 @@ package cr.ac.una.springbootaopmaven.controller;
 import cr.ac.una.springbootaopmaven.entity.Tarea;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import service.TareaService;
+import cr.ac.una.springbootaopmaven.service.TareaService;
 
 import java.util.List;
 
