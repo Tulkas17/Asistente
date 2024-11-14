@@ -18,4 +18,7 @@ public interface DependenciaRepository extends JpaRepository<Dependencia, Long> 
 
     // 3. Verificar si existe una dependencia específica entre dos tareas
     boolean existsByTareaAndTareaDependiente(Tarea tarea, Tarea tareaDependiente);
+
+    // 4. Verificar si una tarea es dependiente de otra
+    boolean existsByTareaDependiente(Tarea tareaDependiente);
 }

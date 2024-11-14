@@ -4,6 +4,9 @@ import cr.ac.una.backend.entity.Tarea;
 import cr.ac.una.backend.enumeration.Estado;
 import cr.ac.una.backend.enumeration.Prioridad;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -32,4 +35,9 @@ public interface TareaRepository extends JpaRepository<Tarea, Long> {
 
     // 7. Encontrar tareas por prioridad y estado específicos
     List<Tarea> findByPrioridadAndEstado(Prioridad prioridad, Estado estado);
+
+    // 8. Actualizar el estado de una tarea
+    @Modifying
+    @Query("UPDATE Tarea t SET t.estado = :estado WHERE t.id = :id")
+    void actualizarEstadoTarea(@Param("id") Long id, @Param("estado") Estado estado);
 }

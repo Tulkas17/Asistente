@@ -40,8 +40,6 @@ verificar_condiciones_climaticas(Condiciones) :-
     clima_actual(Condicion),
     !. % Este corte asegura que una vez que encontramos una condición climática que se cumple, no continuamos verificando.
 
-
-
 % Estado actual del clima
 clima_actual(soleado).
 %clima_actual(nublado).
@@ -66,8 +64,6 @@ plan_optimo(TareasIniciales, Plan) :-
         fail
     ).
 
-
-
 condiciones_climaticas_cumplidas_para_lista([]).
 condiciones_climaticas_cumplidas_para_lista([Tarea | Resto]) :-
     ( condiciones_climaticas_cumplidas(Tarea) ->
@@ -77,3 +73,13 @@ condiciones_climaticas_cumplidas_para_lista([Tarea | Resto]) :-
         fail
     ).
 
+% Regla para verificar si el plan es posible
+% Similar a plan_optimo, pero falla explícitamente si alguna de las condiciones climáticas o dependencias no está satisfecha. Esto permite detectar que el plan no es posible y emita una alerta.
+plan_posible(TareasIniciales, Plan) :-
+    agregar_dependencias(TareasIniciales, TareasIniciales, TareasConDependencias),
+    ( condiciones_climaticas_cumplidas_para_lista(TareasConDependencias) ->
+        ordenar_por_prioridad(TareasConDependencias, Plan),
+        write('Plan óptimo generado: '), writeln(Plan)
+    ;   writeln('No se pudo generar un plan óptimo debido a condiciones climáticas no cumplidas o dependencias no satisfechas.'),
+        fail
+    ).
