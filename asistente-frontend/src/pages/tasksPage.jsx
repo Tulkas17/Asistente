@@ -1,5 +1,5 @@
 // tasksPage.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import TaskModal from '../components/TaskModal'; // Ensure path is correct
 
@@ -48,11 +48,20 @@ function TasksPage() {
       });
   };
 
-  //Dummy task list 
+  // Delete request
+  const handleDeleteTask = (id) => {
+    Axios.delete(`http://localhost:8080/api/tareas/${id}`)
+      .then((response) => {
+        console.log('Task deleted successfully:', response.data);
+      })
+      .catch((error) => {
+        console.error('Error deleting task:', error);
+      });
+  };
   
   let taskList = [];
 
-  // Add dummy tasks to the list
+  //Dumy tasks, comment when endpoint is working
     taskList.push({
         nombre: 'Tarea 1',
         prioridad: 'alta',
@@ -72,20 +81,19 @@ function TasksPage() {
         });
 
 
-    Axios.get('http://localhost:8080/api/tareas')
+    useEffect(() => {
+
+      Axios.get('http://localhost:8080/api/tareas')
         .then((response) => {
         console.log('Tasks:', response.data);
-        const taskList = document.getElementById('taskList');
-        response.data.forEach((task) => {
-            const li = document.createElement('li');
-            li.className = 'list-group-item';
-            li.textContent = task.nombre;
-            taskList.appendChild(li);
-        });
+        
+        taskList = response.data;
+
         })
         .catch((error) => {
         console.error('Error fetching tasks:', error);
         });
+    }, []);
     
 
 
@@ -103,7 +111,24 @@ function TasksPage() {
         <div className="card">
           <div className="card-body">
             <h3>Tareas Diarias</h3>
-            <ul className="list-group" id="taskList"></ul>
+            <ul id="taskList" className="list-group">
+              {taskList.map((task, index) => (
+                <li key={index} className="list-group-item">
+                  {task.nombre}
+                  <br/>
+                  {"Prioridad: "+task.prioridad}
+                  <br/>
+                  {"Duración: "+task.duracion}
+                  <br/>
+                  {"Fecha límite: "+task.fechaLimite}
+                  <br/>
+                  {"Dependencia: "+task.dependencia}
+                  <br/>
+                  {"Requerimientos: "+task.requerimientos}
+                
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
