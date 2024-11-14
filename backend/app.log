@@ -2828,3 +2828,139 @@ This generated password is for development use only. Your security configuration
 2024-11-14T01:58:52.174-06:00  INFO 14236 --- [Proyecto 2] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Application version is -1: false
 2024-11-14T01:58:52.175-06:00  INFO 14236 --- [Proyecto 2] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
 2024-11-14T01:58:52.212-06:00  INFO 14236 --- [Proyecto 2] [DiscoveryClient-CacheRefreshExecutor-%d] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2024-11-14T02:37:46.344-06:00  INFO 12816 --- [Proyecto 2] [main] cr.ac.una.backend.BackendApplication     : Starting BackendApplication using Java 21.0.2 with PID 12816 (C:\Users\isaac\Desktop\Asistente\backend\target\classes started by isaac in C:\Users\isaac\Desktop\Asistente\backend)
+2024-11-14T02:37:46.355-06:00  INFO 12816 --- [Proyecto 2] [main] cr.ac.una.backend.BackendApplication     : No active profile set, falling back to 1 default profile: "default"
+2024-11-14T02:37:47.817-06:00  INFO 12816 --- [Proyecto 2] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-14T02:37:48.228-06:00  INFO 12816 --- [Proyecto 2] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 397 ms. Found 4 JPA repository interfaces.
+2024-11-14T02:37:48.434-06:00  INFO 12816 --- [Proyecto 2] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=11b85723-a465-3fdb-a0b0-4a2bfd977fdb
+2024-11-14T02:37:49.056-06:00  WARN 12816 --- [Proyecto 2] [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2024-11-14T02:37:49.063-06:00  WARN 12816 --- [Proyecto 2] [main] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2024-11-14T02:37:49.317-06:00  INFO 12816 --- [Proyecto 2] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-11-14T02:37:49.330-06:00  INFO 12816 --- [Proyecto 2] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-11-14T02:37:49.330-06:00  INFO 12816 --- [Proyecto 2] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2024-11-14T02:37:49.388-06:00  INFO 12816 --- [Proyecto 2] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-11-14T02:37:49.388-06:00  INFO 12816 --- [Proyecto 2] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2974 ms
+2024-11-14T02:37:49.712-06:00  INFO 12816 --- [Proyecto 2] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-14T02:37:49.822-06:00  INFO 12816 --- [Proyecto 2] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-11-14T02:37:49.870-06:00  INFO 12816 --- [Proyecto 2] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-11-14T02:37:50.280-06:00  INFO 12816 --- [Proyecto 2] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-14T02:37:50.334-06:00  INFO 12816 --- [Proyecto 2] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-11-14T02:37:51.258-06:00  INFO 12816 --- [Proyecto 2] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@558aa1f1
+2024-11-14T02:37:51.264-06:00  INFO 12816 --- [Proyecto 2] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-11-14T02:37:51.541-06:00  WARN 12816 --- [Proyecto 2] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-11-14T02:37:52.553-06:00  INFO 12816 --- [Proyecto 2] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-11-14T02:37:52.833-06:00  INFO 12816 --- [Proyecto 2] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-14T02:37:53.225-06:00  WARN 12816 --- [Proyecto 2] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-11-14T02:37:53.876-06:00  WARN 12816 --- [Proyecto 2] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 2785994a-a5e7-4b27-9c3a-5f63650da8d8
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-11-14T02:37:53.897-06:00  INFO 12816 --- [Proyecto 2] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2024-11-14T02:37:54.038-06:00  INFO 12816 --- [Proyecto 2] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-11-14T02:37:54.187-06:00  INFO 12816 --- [Proyecto 2] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2024-11-14T02:37:54.223-06:00  WARN 12816 --- [Proyecto 2] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2024-11-14T02:37:54.279-06:00  INFO 12816 --- [Proyecto 2] [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2024-11-14T02:37:54.297-06:00  INFO 12816 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2024-11-14T02:37:54.300-06:00  INFO 12816 --- [Proyecto 2] [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2024-11-14T02:37:54.306-06:00  INFO 12816 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2024-11-14T02:37:54.306-06:00  INFO 12816 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2024-11-14T02:37:54.306-06:00  INFO 12816 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2024-11-14T02:37:54.306-06:00  INFO 12816 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2024-11-14T02:37:54.307-06:00  INFO 12816 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2024-11-14T02:37:54.307-06:00  INFO 12816 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2024-11-14T02:37:54.307-06:00  INFO 12816 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2024-11-14T02:37:54.878-06:00  INFO 12816 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2024-11-14T02:37:54.880-06:00  INFO 12816 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2024-11-14T02:37:54.881-06:00  INFO 12816 --- [Proyecto 2] [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2024-11-14T02:37:54.882-06:00  INFO 12816 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1731573474882 with initial instances count: 0
+2024-11-14T02:37:54.887-06:00  INFO 12816 --- [Proyecto 2] [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application PROYECTO 2 with eureka with status UP
+2024-11-14T02:37:54.888-06:00  INFO 12816 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1731573474888, current=UP, previous=STARTING]
+2024-11-14T02:37:54.890-06:00  INFO 12816 --- [Proyecto 2] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_PROYECTO 2/host.docker.internal:Proyecto 2: registering service...
+2024-11-14T02:37:54.909-06:00  INFO 12816 --- [Proyecto 2] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2024-11-14T02:37:54.910-06:00  INFO 12816 --- [Proyecto 2] [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8080
+2024-11-14T02:37:54.921-06:00  INFO 12816 --- [Proyecto 2] [main] cr.ac.una.backend.BackendApplication     : Started BackendApplication in 9.182 seconds (process running for 10.607)
+2024-11-14T02:37:55.073-06:00  INFO 12816 --- [Proyecto 2] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_PROYECTO 2/host.docker.internal:Proyecto 2 - registration status: 204
+2024-11-14T02:37:55.324-06:00  INFO 12816 --- [Proyecto 2] [RMI TCP Connection(4)-192.168.100.57] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-11-14T02:37:55.326-06:00  INFO 12816 --- [Proyecto 2] [RMI TCP Connection(4)-192.168.100.57] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-11-14T02:37:55.327-06:00  INFO 12816 --- [Proyecto 2] [RMI TCP Connection(4)-192.168.100.57] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-11-14T02:38:08.296-06:00  INFO 12816 --- [Proyecto 2] [SpringApplicationShutdownHook] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application PROYECTO 2 with eureka with status DOWN
+2024-11-14T02:38:08.297-06:00  INFO 12816 --- [Proyecto 2] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1731573488297, current=DOWN, previous=UP]
+2024-11-14T02:38:08.297-06:00  INFO 12816 --- [Proyecto 2] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_PROYECTO 2/host.docker.internal:Proyecto 2: registering service...
+2024-11-14T02:38:08.307-06:00  INFO 12816 --- [Proyecto 2] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-11-14T02:38:08.309-06:00  INFO 12816 --- [Proyecto 2] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-11-14T02:38:08.317-06:00  INFO 12816 --- [Proyecto 2] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_PROYECTO 2/host.docker.internal:Proyecto 2 - registration status: 204
+2024-11-14T02:38:08.331-06:00  INFO 12816 --- [Proyecto 2] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-11-14T02:38:08.332-06:00  INFO 12816 --- [Proyecto 2] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2024-11-14T02:38:11.339-06:00  INFO 12816 --- [Proyecto 2] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Unregistering ...
+2024-11-14T02:38:11.365-06:00  INFO 12816 --- [Proyecto 2] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_PROYECTO 2/host.docker.internal:Proyecto 2 - deregister  status: 200
+2024-11-14T02:38:11.366-06:00  INFO 12816 --- [Proyecto 2] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient
+2024-11-14T03:07:57.985-06:00  INFO 12180 --- [Proyecto 2] [main] cr.ac.una.backend.BackendApplication     : Starting BackendApplication using Java 21.0.2 with PID 12180 (C:\Users\isaac\Desktop\Asistente\backend\target\classes started by isaac in C:\Users\isaac\Desktop\Asistente\backend)
+2024-11-14T03:07:57.987-06:00  INFO 12180 --- [Proyecto 2] [main] cr.ac.una.backend.BackendApplication     : No active profile set, falling back to 1 default profile: "default"
+2024-11-14T03:07:58.812-06:00  INFO 12180 --- [Proyecto 2] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-14T03:07:58.968-06:00  INFO 12180 --- [Proyecto 2] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 150 ms. Found 4 JPA repository interfaces.
+2024-11-14T03:07:59.176-06:00  INFO 12180 --- [Proyecto 2] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=8851fc60-fa00-3bf2-939f-86d7621620ce
+2024-11-14T03:07:59.501-06:00  WARN 12180 --- [Proyecto 2] [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2024-11-14T03:07:59.504-06:00  WARN 12180 --- [Proyecto 2] [main] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected/applied to a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies/advisors. If this bean does not have to be post-processed, declare it with ROLE_INFRASTRUCTURE.
+2024-11-14T03:07:59.720-06:00  INFO 12180 --- [Proyecto 2] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-11-14T03:07:59.731-06:00  INFO 12180 --- [Proyecto 2] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-11-14T03:07:59.732-06:00  INFO 12180 --- [Proyecto 2] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2024-11-14T03:07:59.784-06:00  INFO 12180 --- [Proyecto 2] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-11-14T03:07:59.785-06:00  INFO 12180 --- [Proyecto 2] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1765 ms
+2024-11-14T03:08:00.069-06:00  INFO 12180 --- [Proyecto 2] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-14T03:08:00.131-06:00  INFO 12180 --- [Proyecto 2] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-11-14T03:08:00.165-06:00  INFO 12180 --- [Proyecto 2] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-11-14T03:08:00.439-06:00  INFO 12180 --- [Proyecto 2] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-14T03:08:00.464-06:00  INFO 12180 --- [Proyecto 2] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-11-14T03:08:00.948-06:00  INFO 12180 --- [Proyecto 2] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4fc256ec
+2024-11-14T03:08:00.949-06:00  INFO 12180 --- [Proyecto 2] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-11-14T03:08:01.031-06:00  WARN 12180 --- [Proyecto 2] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-11-14T03:08:01.825-06:00  INFO 12180 --- [Proyecto 2] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-11-14T03:08:02.001-06:00  INFO 12180 --- [Proyecto 2] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-14T03:08:02.411-06:00  WARN 12180 --- [Proyecto 2] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-11-14T03:08:03.045-06:00  WARN 12180 --- [Proyecto 2] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 38c2aa62-27ff-4511-9a6b-222a0ddf524c
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-11-14T03:08:03.060-06:00  INFO 12180 --- [Proyecto 2] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2024-11-14T03:08:03.157-06:00  INFO 12180 --- [Proyecto 2] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2024-11-14T03:08:03.298-06:00  INFO 12180 --- [Proyecto 2] [main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2024-11-14T03:08:03.339-06:00  WARN 12180 --- [Proyecto 2] [main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2024-11-14T03:08:03.406-06:00  INFO 12180 --- [Proyecto 2] [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2024-11-14T03:08:03.431-06:00  INFO 12180 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2024-11-14T03:08:03.436-06:00  INFO 12180 --- [Proyecto 2] [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2024-11-14T03:08:03.445-06:00  INFO 12180 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2024-11-14T03:08:03.445-06:00  INFO 12180 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2024-11-14T03:08:03.445-06:00  INFO 12180 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2024-11-14T03:08:03.445-06:00  INFO 12180 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2024-11-14T03:08:03.445-06:00  INFO 12180 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2024-11-14T03:08:03.445-06:00  INFO 12180 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2024-11-14T03:08:03.445-06:00  INFO 12180 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2024-11-14T03:08:04.220-06:00  INFO 12180 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2024-11-14T03:08:04.221-06:00  INFO 12180 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2024-11-14T03:08:04.222-06:00  INFO 12180 --- [Proyecto 2] [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2024-11-14T03:08:04.224-06:00  INFO 12180 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1731575284223 with initial instances count: 0
+2024-11-14T03:08:04.230-06:00  INFO 12180 --- [Proyecto 2] [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application PROYECTO 2 with eureka with status UP
+2024-11-14T03:08:04.230-06:00  INFO 12180 --- [Proyecto 2] [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1731575284230, current=UP, previous=STARTING]
+2024-11-14T03:08:04.231-06:00  INFO 12180 --- [Proyecto 2] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_PROYECTO 2/host.docker.internal:Proyecto 2: registering service...
+2024-11-14T03:08:04.252-06:00  INFO 12180 --- [Proyecto 2] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2024-11-14T03:08:04.253-06:00  INFO 12180 --- [Proyecto 2] [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8080
+2024-11-14T03:08:04.265-06:00  INFO 12180 --- [Proyecto 2] [main] cr.ac.una.backend.BackendApplication     : Started BackendApplication in 6.69 seconds (process running for 7.928)
+2024-11-14T03:08:04.404-06:00  INFO 12180 --- [Proyecto 2] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_PROYECTO 2/host.docker.internal:Proyecto 2 - registration status: 204
+2024-11-14T03:08:04.583-06:00  INFO 12180 --- [Proyecto 2] [RMI TCP Connection(4)-192.168.100.57] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-11-14T03:08:04.584-06:00  INFO 12180 --- [Proyecto 2] [RMI TCP Connection(4)-192.168.100.57] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-11-14T03:08:04.585-06:00  INFO 12180 --- [Proyecto 2] [RMI TCP Connection(4)-192.168.100.57] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-11-14T03:08:17.248-06:00  INFO 12180 --- [Proyecto 2] [SpringApplicationShutdownHook] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application PROYECTO 2 with eureka with status DOWN
+2024-11-14T03:08:17.249-06:00  INFO 12180 --- [Proyecto 2] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1731575297249, current=DOWN, previous=UP]
+2024-11-14T03:08:17.249-06:00  INFO 12180 --- [Proyecto 2] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_PROYECTO 2/host.docker.internal:Proyecto 2: registering service...
+2024-11-14T03:08:17.260-06:00  INFO 12180 --- [Proyecto 2] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-11-14T03:08:17.262-06:00  INFO 12180 --- [Proyecto 2] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-11-14T03:08:17.263-06:00  INFO 12180 --- [Proyecto 2] [DiscoveryClient-InstanceInfoReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_PROYECTO 2/host.docker.internal:Proyecto 2 - registration status: 204
+2024-11-14T03:08:17.296-06:00  INFO 12180 --- [Proyecto 2] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-11-14T03:08:17.296-06:00  INFO 12180 --- [Proyecto 2] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Shutting down DiscoveryClient ...
+2024-11-14T03:08:20.300-06:00  INFO 12180 --- [Proyecto 2] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Unregistering ...
+2024-11-14T03:08:20.327-06:00  INFO 12180 --- [Proyecto 2] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_PROYECTO 2/host.docker.internal:Proyecto 2 - deregister  status: 200
+2024-11-14T03:08:20.327-06:00  INFO 12180 --- [Proyecto 2] [SpringApplicationShutdownHook] com.netflix.discovery.DiscoveryClient    : Completed shut down of DiscoveryClient

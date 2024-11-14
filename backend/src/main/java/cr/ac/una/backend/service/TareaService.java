@@ -1,6 +1,7 @@
 package cr.ac.una.backend.service;
 
 import cr.ac.una.backend.entity.Tarea;
+import cr.ac.una.backend.prolog.PrologExecutionException;
 import cr.ac.una.backend.repository.TareaRepository;
 import org.jpl7.Term;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,16 +54,22 @@ public class TareaService {
 
     // Obtener el plan de tareas optimizado desde Prolog
     public List<String> obtenerPlanOptimizado() {
-        List<Tarea> tareas = obtenerTareas();
-        List<Map<String, Object>> tareasProlog = convertirTareasAProlog(tareas);
-        List<Map<String, Term>> resultadoProlog = prologEngine.obtenerPlanDeTareas(tareasProlog);
+        try {
+            List<Tarea> tareas = obtenerTareas();
+            List<Map<String, Object>> tareasProlog = convertirTareasAProlog(tareas);
+            List<Map<String, Term>> resultadoProlog = prologEngine.obtenerPlanDeTareas(tareasProlog);
 
-        // Convertir los términos resultantes en strings para una fácil visualización o procesamiento
-        return resultadoProlog.stream()
-                .map(map -> map.get("Plan").toString()) // Convierte el Term a String directamente
-                .collect(Collectors.toList());
+            return resultadoProlog.stream()
+                    .map(map -> map.get("Plan").toString())
+                    .collect(Collectors.toList());
+        } catch (PrologExecutionException e) {
+            System.err.println("Error en Prolog al obtener el plan optimizado: " + e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            System.err.println("Error desconocido al procesar el plan optimizado: " + e.getMessage());
+            throw new RuntimeException("Error desconocido al procesar el plan optimizado.", e);
+        }
     }
-
 
     // Método auxiliar para convertir tareas a formato compatible con Prolog
     private List<Map<String, Object>> convertirTareasAProlog(List<Tarea> tareas) {
