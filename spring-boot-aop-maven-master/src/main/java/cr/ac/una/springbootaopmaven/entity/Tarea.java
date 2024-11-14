@@ -2,6 +2,7 @@ package cr.ac.una.springbootaopmaven.entity;
 
 import cr.ac.una.springbootaopmaven.enumeration.Estado;
 import cr.ac.una.springbootaopmaven.enumeration.Prioridad;
+import cr.ac.una.springbootaopmaven.enumeration.CondicionClimatica;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,9 +39,28 @@ public class Tarea {
     private Date horaInicio;
 
     @ManyToOne
-    @JoinColumn(name = "schedule_id") // Arreglar este campo
+    @JoinColumn(name = "schedule_id") // Campo para relacionar con el horario
     private Horario horario;
 
     @OneToMany(mappedBy = "tarea", cascade = CascadeType.ALL)
     private List<Dependencia> dependencias;
+
+    @ElementCollection(targetClass = CondicionClimatica.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "tarea_condiciones_climaticas", joinColumns = @JoinColumn(name = "tarea_id"))
+    @Column(name = "condicion_climatica")
+    private List<CondicionClimatica> condicionesClimaticas;
+
+    // Métodos adicionales, como los agregados anteriormente...
+
+    /**
+     * Verifica si las condiciones climáticas actuales permiten realizar esta tarea.
+     * @param climaActual Condición climática actual.
+     * @return true si la tarea puede realizarse bajo el clima actual, false en caso contrario.
+     */
+    public boolean puedeRealizarseBajoCondicion(CondicionClimatica climaActual) {
+        return condicionesClimaticas.contains(CondicionClimatica.INDEPENDIENTE) || condicionesClimaticas.contains(climaActual);
+    }
+
+    // Otros métodos de la clase, como los métodos de verificación de dependencias, estado, etc.
 }
