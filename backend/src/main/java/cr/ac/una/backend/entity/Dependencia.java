@@ -1,5 +1,6 @@
 package cr.ac.una.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class Dependencia {
 
     @ManyToOne
     @JoinColumn(name = "tarea_id")
+    @JsonBackReference
     private Tarea tarea;
 
     @ManyToOne

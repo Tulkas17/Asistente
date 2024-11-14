@@ -15,28 +15,28 @@ import java.util.List;
 @Repository
 public interface TareaRepository extends JpaRepository<Tarea, Long> {
 
-    // 1. Encontrar tareas por prioridad
+    // Encontrar tareas por prioridad
     List<Tarea> findByPrioridad(Prioridad prioridad);
 
-    // 2. Encontrar tareas por estado (ej., PENDIENTE, EN_PROGRESO, COMPLETADA)
+    // Encontrar tareas por estado (ej., PENDIENTE, EN_PROGRESO, COMPLETADA)
     List<Tarea> findByEstado(Estado estado);
 
-    // 3. Encontrar tareas con una fecha límite específica
+    // Encontrar tareas con una fecha límite específica
     List<Tarea> findByFechaLimite(Date fechaLimite);
 
-    // 4. Encontrar tareas con fecha límite antes de una fecha específica
+    // Encontrar tareas con fecha límite antes de una fecha específica
     List<Tarea> findByFechaLimiteBefore(Date fechaLimite);
 
-    // 5. Encontrar tareas con fecha límite después de una fecha específica
+    // Encontrar tareas con fecha límite después de una fecha específica
     List<Tarea> findByFechaLimiteAfter(Date fechaLimite);
 
-    // 6. Encontrar tareas que dependan de otras tareas (que tengan dependencias)
+    // Encontrar tareas que dependan de otras tareas (que tengan dependencias)
     List<Tarea> findByDependenciasNotNull();
 
-    // 7. Encontrar tareas por prioridad y estado específicos
+    // Encontrar tareas por prioridad y estado específicos
     List<Tarea> findByPrioridadAndEstado(Prioridad prioridad, Estado estado);
 
-    // 8. Actualizar el estado de una tarea
+    // Actualizar el estado de una tarea
     @Modifying
     @Query("UPDATE Tarea t SET t.estado = :estado WHERE t.id = :id")
     void actualizarEstadoTarea(@Param("id") Long id, @Param("estado") Estado estado);

@@ -3,4 +3,4 @@ El proyecto se encarga de mostrar las vistas (front-end) de un asistente basico 
 
 Como correr?
 npm install
-npm run dev 
+npm start 

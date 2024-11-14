@@ -1,5 +1,6 @@
 package cr.ac.una.backend.controller;
 
+import cr.ac.una.backend.entity.Dependencia;
 import cr.ac.una.backend.entity.Tarea;
 import cr.ac.una.backend.enumeration.Estado;
 import cr.ac.una.backend.prolog.PrologExecutionException;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -55,7 +57,7 @@ public class TareaController {
     // Actualizar una tarea existente
     @PutMapping("/{id}")
     public ResponseEntity<?> actualizarTarea(@PathVariable Long id, @RequestBody @Valid Tarea tareaActualizada) {
-        Tarea tareaActualizadaRespuesta = tareaService.actualizarTarea(id, tareaActualizada);
+        ResponseEntity<?> tareaActualizadaRespuesta = tareaService.actualizarTarea(id, tareaActualizada);
         return ResponseEntity.ok(tareaActualizadaRespuesta);
     }
 

@@ -1,5 +1,3 @@
-// src/main/java/cr/ac/una/springbootaopmaven/config/WebConfig.java
-
 package cr.ac.una.backend.config;
 
 import org.springframework.context.annotation.Configuration;

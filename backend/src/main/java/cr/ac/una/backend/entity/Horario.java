@@ -1,5 +1,6 @@
 package cr.ac.una.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,5 +23,6 @@ public class Horario {
     private Date fecha;
 
     @OneToMany(mappedBy = "horario", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Tarea> tareas;
 }

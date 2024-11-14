@@ -7,14 +7,20 @@ import cr.ac.una.backend.prolog.PrologEngine;
 import cr.ac.una.backend.prolog.PrologExecutionException;
 import cr.ac.una.backend.repository.DependenciaRepository;
 import cr.ac.una.backend.repository.TareaRepository;
+import jakarta.transaction.Transactional;
 import org.jpl7.Query;
 import org.jpl7.Term;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,8 +52,19 @@ public class TareaService {
 
     // Crear una nueva tarea
     public Tarea crearTarea(Tarea tarea) {
-        validarDependencias(tarea.getDependencias());
-        return tareaRepository.save(tarea);
+        Tarea tareaGuardada = tareaRepository.save(tarea);
+
+        if (tarea.getDependencias() != null && !tarea.getDependencias().isEmpty()) {
+            List<Dependencia> nuevasDependencias = tarea.getDependencias().stream()
+                    .filter(dep -> !existeDependencia(tareaGuardada.getId(), dep.getTareaDependiente().getId()))
+                    .map(dep -> new Dependencia(null, tareaGuardada, obtenerTareaPorId(dep.getTareaDependiente().getId())))
+                    .collect(Collectors.toList());
+
+            dependenciaRepository.saveAll(nuevasDependencias);
+            tareaGuardada.setDependencias(nuevasDependencias);
+        }
+
+        return tareaGuardada;
     }
 
     // Actualizar el estado de una tarea
@@ -58,16 +75,47 @@ public class TareaService {
     }
 
     // Actualizar una tarea existente
-    public Tarea actualizarTarea(Long id, Tarea tareaActualizada) {
-        validarDependencias(tareaActualizada.getDependencias());
-        return tareaRepository.findById(id).map(tarea -> {
+    @Transactional
+    public ResponseEntity<?> actualizarTarea(@PathVariable Long id, @RequestBody Tarea tareaActualizada) {
+        Optional<Tarea> tareaOptional = tareaRepository.findById(id);
+        if (!((java.util.Optional<?>) tareaOptional).isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Tarea tarea = tareaOptional.get();
+
+        try {
+            // Actualizar atributos básicos
             tarea.setNombre(tareaActualizada.getNombre());
             tarea.setPrioridad(tareaActualizada.getPrioridad());
             tarea.setTiempoEstimado(tareaActualizada.getTiempoEstimado());
-            tarea.setDependencias(tareaActualizada.getDependencias());
+            tarea.setFechaLimite(tareaActualizada.getFechaLimite());
+            tarea.setRequisitos(tareaActualizada.getRequisitos());
+            tarea.setEstado(tareaActualizada.getEstado());
             tarea.setCondicionesClimaticas(tareaActualizada.getCondicionesClimaticas());
-            return tareaRepository.save(tarea);
-        }).orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
+
+            // Limpiar y reasignar dependencias
+            tarea.getDependencias().clear();
+            if (tareaActualizada.getDependencias() != null) {
+                for (Dependencia dependencia : tareaActualizada.getDependencias()) {
+                    Dependencia nuevaDependencia = new Dependencia();
+                    nuevaDependencia.setTarea(tarea);
+                    nuevaDependencia.setTareaDependiente(dependencia.getTareaDependiente());
+                    tarea.getDependencias().add(nuevaDependencia);
+                }
+            }
+
+            // Guardar cambios
+            tareaRepository.save(tarea);
+            return ResponseEntity.ok(tarea);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar la tarea: " + e.getMessage());
+        }
+    }
+
+    // Método para verificar si ya existe una dependencia entre dos tareas
+    private boolean existeDependencia(Long tareaId, Long tareaDependienteId) {
+        return dependenciaRepository.existsByTareaIdAndTareaDependienteId(tareaId, tareaDependienteId);
     }
 
     // Eliminar una tarea por ID, verificando primero si es dependencia de otra tarea
@@ -120,9 +168,9 @@ public class TareaService {
     // Método para verificar que las dependencias especificadas existen en la base de datos
     private void validarDependencias(List<Dependencia> dependencias) {
         for (Dependencia dependencia : dependencias) {
-            Tarea tareaDependiente = dependencia.getTareaDependiente();
-            if (!tareaRepository.existsById(tareaDependiente.getId())) {
-                throw new RuntimeException("Dependencia no válida: La tarea con ID " + tareaDependiente.getId() + " no existe.");
+            Long tareaDependienteId = dependencia.getTareaDependiente().getId();
+            if (!tareaRepository.existsById(tareaDependienteId)) {
+                throw new RuntimeException("Dependencia no válida: La tarea con ID " + tareaDependienteId + " no existe.");
             }
         }
     }

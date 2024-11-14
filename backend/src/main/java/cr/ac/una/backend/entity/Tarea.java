@@ -1,5 +1,6 @@
 package cr.ac.una.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import cr.ac.una.backend.enumeration.CondicionClimatica;
 import cr.ac.una.backend.enumeration.Estado;
 import cr.ac.una.backend.enumeration.Prioridad;
@@ -12,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +36,7 @@ public class Tarea {
     private Prioridad prioridad;
 
     @Min(value = 1, message = "El tiempo estimado debe ser al menos 1 minuto.")
-    private int tiempoEstimado;
+    private float tiempoEstimado;
 
     @FutureOrPresent(message = "La fecha límite debe ser en el presente o en el futuro.")
     private Date fechaLimite;
@@ -43,7 +45,7 @@ public class Tarea {
 
     @NotNull(message = "El estado de la tarea es obligatorio.")
     @Enumerated(EnumType.STRING)
-    private Estado estado;
+    private Estado estado = Estado.PENDIENTE; // Estado predeterminado si no se especifica
 
     private Date horaInicio;
 
@@ -51,8 +53,9 @@ public class Tarea {
     @JoinColumn(name = "schedule_id") // Campo para relacionar con el horario
     private Horario horario;
 
-    @OneToMany(mappedBy = "tarea", cascade = CascadeType.ALL)
-    private List<Dependencia> dependencias;
+    @OneToMany(mappedBy = "tarea", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Dependencia> dependencias = new ArrayList<>();
 
     @ElementCollection(targetClass = CondicionClimatica.class)
     @Enumerated(EnumType.STRING)
