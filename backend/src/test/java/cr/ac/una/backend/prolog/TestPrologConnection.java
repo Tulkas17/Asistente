@@ -12,7 +12,6 @@ public class TestPrologConnection {
         String consultQuery = "consult('src/main/resources/prolog/tareas.pl')";
         Query query = new Query(consultQuery);
 
-        // Verificar si el archivo Prolog se cargó exitosamente
         if (query.hasSolution()) {
             System.out.println("Archivo Prolog cargado correctamente.");
         } else {
@@ -20,36 +19,48 @@ public class TestPrologConnection {
             return;
         }
 
-        // Definir el nombre de la tarea que queremos consultar
-        String nombreTarea = "jardineria";
+        // Información sobre una tarea específica
+        String nombreTarea = "'jardineria'";
         System.out.println("Consultando información sobre la tarea: " + nombreTarea);
-
-        // Ejecutar una consulta de ejemplo para obtener información sobre una tarea específica
         String consultaEjemplo = "tarea(" + nombreTarea + ", Prioridad, Duracion, Dependencia, CondicionClimatica)";
         Query consulta = new Query(consultaEjemplo);
 
-        // Verificar si la consulta tiene solución y mostrar los resultados
         if (consulta.hasSolution()) {
             Map<String, Term> resultado = consulta.oneSolution();
-            System.out.println("Consulta ejecutada correctamente. Resultado:");
-            resultado.forEach((variable, valor) -> System.out.println(variable + " = " + valor));
+            System.out.println("Resultado de la consulta:");
+            resultado.forEach((k, v) -> System.out.println(k + " = " + v));
         } else {
             System.out.println("La consulta no tiene soluciones.");
         }
 
-        // Realizar una consulta para obtener el plan óptimo de tareas
-        String ListaPlanes = "reparar_auto, informe, limpiar_casa, comprar_comida";
+        // Generar plan óptimo
+        String ListaPlanes = "'reparar_auto', 'informe', 'limpiar_casa', 'comprar_comida'";
         System.out.println("Generando plan óptimo de tareas: " + ListaPlanes);
-        String consultaPlan = "plan_optimo(["+ListaPlanes+"], Plan)";
+        String consultaPlan = "plan_optimo([" + ListaPlanes + "], Plan)";
         Query consultaPlanOptimo = new Query(consultaPlan);
 
-        // Verificar si el plan tiene solución y mostrar el resultado
         if (consultaPlanOptimo.hasSolution()) {
             Map<String, Term> planResultado = consultaPlanOptimo.oneSolution();
             System.out.println("Plan óptimo de tareas:");
-            planResultado.forEach((variable, valor) -> System.out.println(variable + " = " + valor));
+            planResultado.forEach((k, v) -> System.out.println(k + " = " + v));
         } else {
             System.out.println("No se pudo generar un plan óptimo.");
+        }
+
+        // Verificar condiciones climáticas
+        String consultaCondiciones = "condiciones_climaticas_cumplidas('jardineria')";
+        Query queryCondiciones = new Query(consultaCondiciones);
+        System.out.println("¿Condiciones climáticas cumplidas para jardineria? " + (queryCondiciones.hasSolution() ? "Sí" : "No"));
+
+        // Verificar si el plan es posible
+        String consultaPlanPosible = "plan_posible(['reparar_auto', 'informe'], Plan)";
+        Query queryPlanPosible = new Query(consultaPlanPosible);
+        if (queryPlanPosible.hasSolution()) {
+            Map<String, Term> resultadoPlanPosible = queryPlanPosible.oneSolution();
+            System.out.println("Plan posible generado:");
+            resultadoPlanPosible.forEach((k, v) -> System.out.println(k + " = " + v));
+        } else {
+            System.out.println("No se pudo generar un plan posible.");
         }
     }
 }

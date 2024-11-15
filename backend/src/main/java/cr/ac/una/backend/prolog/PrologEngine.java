@@ -24,32 +24,22 @@ public class PrologEngine {
         }
     }
 
-    // Método para realizar consultas en Prolog
-    public Map<String, Term> realizarConsulta(String consulta) {
+    public void cargarTareasEnProlog(List<String> tareasProlog) {
         try {
-            Query query = new Query(consulta);
-            if (query.hasSolution()) {
-                return query.oneSolution();
-            } else {
-                throw new PrologQueryException("Error: Consulta sin solución en Prolog para: " + consulta);
-            }
-        } catch (Exception e) {
-            throw new PrologQueryException("Excepción al realizar consulta en Prolog: " + consulta, e);
-        }
-    }
+            // Limpia las tareas existentes en Prolog
+            String limpiarTareas = "retractall(tarea(_, _, _, _, _)).";
+            Query limpiarQuery = new Query(limpiarTareas);
+            limpiarQuery.hasSolution();
 
-    // Método específico para obtener un plan de tareas optimizado
-    public List<Map<String, Term>> obtenerPlanDeTareas(List<Map<String, Object>> tareas) {
-        try {
-            String consulta = "plan_optimo(Tareas, Plan)";
-            Query query = new Query(consulta);
-            if (query.hasSolution()) {
-                return List.of(query.allSolutions());
-            } else {
-                throw new PrologQueryException("Error: No se pudo obtener un plan de tareas óptimo.");
+            // Carga las tareas en Prolog
+            for (String tarea : tareasProlog) {
+                Query insertarQuery = new Query(tarea);
+                if (!insertarQuery.hasSolution()) {
+                    throw new PrologUpdateException("Error al insertar tarea en Prolog: " + tarea);
+                }
             }
         } catch (Exception e) {
-            throw new PrologQueryException("Excepción al obtener plan de tareas en Prolog.", e);
+            throw new PrologUpdateException("Error al cargar las tareas en Prolog.", e);
         }
     }
 

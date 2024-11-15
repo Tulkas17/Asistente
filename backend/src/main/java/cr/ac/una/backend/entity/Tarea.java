@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,19 +40,14 @@ public class Tarea {
     private float tiempoEstimado;
 
     @FutureOrPresent(message = "La fecha límite debe ser en el presente o en el futuro.")
-    private Date fechaLimite;
-
-    private String requisitos;
+    private LocalDateTime fechaLimite;
 
     @NotNull(message = "El estado de la tarea es obligatorio.")
     @Enumerated(EnumType.STRING)
     private Estado estado = Estado.PENDIENTE; // Estado predeterminado si no se especifica
 
-    private Date horaInicio;
-
-    @ManyToOne
-    @JoinColumn(name = "schedule_id") // Campo para relacionar con el horario
-    private Horario horario;
+    @FutureOrPresent(message = "La fecha de inicio debe ser en el presente o en el futuro.")
+    private LocalDateTime fechaInicio;
 
     @OneToMany(mappedBy = "tarea", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -68,17 +64,4 @@ public class Tarea {
         this.id = id;
     }
 
-    // Métodos adicionales, como los agregados anteriormente...
-
-    /**
-     * Verifica si las condiciones climáticas actuales permiten realizar esta tarea.
-     *
-     * @param climaActual Condición climática actual.
-     * @return true si la tarea puede realizarse bajo el clima actual, false en caso contrario.
-     */
-    public boolean puedeRealizarseBajoCondicion(CondicionClimatica climaActual) {
-        return condicionesClimaticas.contains(CondicionClimatica.INDEPENDIENTE) || condicionesClimaticas.contains(climaActual);
-    }
-
-    // Otros métodos de la clase, como los métodos de verificación de dependencias, estado, etc.
 }

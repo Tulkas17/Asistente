@@ -78,7 +78,7 @@ public class TareaService {
     @Transactional
     public ResponseEntity<?> actualizarTarea(@PathVariable Long id, @RequestBody Tarea tareaActualizada) {
         Optional<Tarea> tareaOptional = tareaRepository.findById(id);
-        if (!((java.util.Optional<?>) tareaOptional).isPresent()) {
+        if (tareaOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -90,7 +90,7 @@ public class TareaService {
             tarea.setPrioridad(tareaActualizada.getPrioridad());
             tarea.setTiempoEstimado(tareaActualizada.getTiempoEstimado());
             tarea.setFechaLimite(tareaActualizada.getFechaLimite());
-            tarea.setRequisitos(tareaActualizada.getRequisitos());
+            tarea.setFechaInicio(tareaActualizada.getFechaInicio());
             tarea.setEstado(tareaActualizada.getEstado());
             tarea.setCondicionesClimaticas(tareaActualizada.getCondicionesClimaticas());
 
@@ -135,33 +135,46 @@ public class TareaService {
     public List<String> obtenerPlanOptimizado() {
         try {
             List<Tarea> tareas = obtenerTareas();
-            List<Map<String, Object>> tareasProlog = convertirTareasAProlog(tareas);
-            List<Map<String, Term>> resultadoProlog = prologEngine.obtenerPlanDeTareas(tareasProlog);
+            List<String> tareasProlog = convertirTareasAProlog(tareas); // Ahora genera List<String>
 
-            return resultadoProlog.stream()
-                    .map(map -> map.get("Plan").toString())
-                    .collect(Collectors.toList());
-        } catch (PrologExecutionException e) {
-            System.err.println("Error en Prolog al obtener el plan optimizado: " + e.getMessage());
-            throw e;
+            // Enviar las tareas al motor Prolog
+            prologEngine.cargarTareasEnProlog(tareasProlog);
+
+            String consultaProlog = "plan_optimo(Tareas, Plan)";
+            Query query = new Query(consultaProlog);
+
+            if (query.hasSolution()) {
+                Term planTerm = query.oneSolution().get("Plan");
+                return convertirPlanALista(planTerm);
+            } else {
+                throw new RuntimeException("No se pudo generar un plan optimizado.");
+            }
         } catch (Exception e) {
-            System.err.println("Error desconocido al procesar el plan optimizado: " + e.getMessage());
-            throw new RuntimeException("Error desconocido al procesar el plan optimizado.", e);
+            throw new RuntimeException("Error al obtener el plan optimizado.", e);
         }
     }
 
     // Método auxiliar para convertir tareas a formato compatible con Prolog
-    private List<Map<String, Object>> convertirTareasAProlog(List<Tarea> tareas) {
+    private List<String> convertirTareasAProlog(List<Tarea> tareas) {
         return tareas.stream().map(tarea -> {
-            Map<String, Object> tareaMap = new HashMap<>();
-            tareaMap.put("nombre", tarea.getNombre());
-            tareaMap.put("prioridad", tarea.getPrioridad().toString());
-            tareaMap.put("tiempoEstimado", tarea.getTiempoEstimado());
-            tareaMap.put("dependencias", tarea.getDependencias().stream()
-                    .map(dep -> dep.getTareaDependiente().getNombre())
-                    .collect(Collectors.toList()));
-            tareaMap.put("condicionesClimaticas", tarea.getCondicionesClimaticas());
-            return tareaMap;
+            // Formatear nombre y prioridad para Prolog
+            String nombre = tarea.getNombre().toLowerCase();
+            String prioridad = tarea.getPrioridad().toString().toLowerCase();
+            int duracion = Math.round(tarea.getTiempoEstimado());
+
+            // Formatear dependencias como lista en formato Prolog
+            String dependencias = tarea.getDependencias().stream()
+                    .map(dep -> dep.getTareaDependiente().getNombre().toLowerCase())
+                    .collect(Collectors.joining(",", "[", "]"));
+
+            // Formatear condiciones climáticas como lista en formato Prolog
+            String condicionesClimaticas = tarea.getCondicionesClimaticas().stream()
+                    .map(Enum::name)
+                    .map(String::toLowerCase)
+                    .collect(Collectors.joining(",", "[", "]"));
+
+            // Construir predicado Prolog
+            return String.format("tarea(%s, %s, %d, %s, %s).", nombre, prioridad, duracion, dependencias, condicionesClimaticas);
         }).collect(Collectors.toList());
     }
 
@@ -177,10 +190,13 @@ public class TareaService {
 
     // Método para obtener el plan si es posible
     public List<String> obtenerPlanSiPosible() {
-        List<Tarea> tareas = obtenerTareas();
-        List<Map<String, Object>> tareasProlog = convertirTareasAProlog(tareas);
-
         try {
+            List<Tarea> tareas = obtenerTareas();
+            List<String> tareasProlog = convertirTareasAProlog(tareas);
+
+            // Enviar las tareas al motor Prolog
+            prologEngine.cargarTareasEnProlog(tareasProlog);
+
             String consultaProlog = "plan_posible(Tareas, Plan)";
             Query query = new Query(consultaProlog);
 
@@ -190,12 +206,8 @@ public class TareaService {
             } else {
                 return List.of("No se pudo generar un plan óptimo: condiciones climáticas o dependencias no satisfechas.");
             }
-        } catch (PrologExecutionException e) {
-            System.err.println("Error en Prolog al verificar plan posible: " + e.getMessage());
-            return List.of("Error en Prolog al verificar plan posible.");
         } catch (Exception e) {
-            System.err.println("Error desconocido al verificar plan posible: " + e.getMessage());
-            return List.of("Error desconocido al verificar plan posible.");
+            throw new RuntimeException("Error al verificar si el plan es posible.", e);
         }
     }
 
@@ -207,15 +219,18 @@ public class TareaService {
 
     // Método para Actualizar el estado de una tarea en la base de datos y Generar un nuevo plan óptimo con las tareas pendientes.
     public List<String> actualizarEstadoYReplanificar(Long id, Estado nuevoEstado) {
-        Tarea tarea = obtenerTareaPorId(id);
-        tarea.setEstado(nuevoEstado);
-        tareaRepository.save(tarea);
-
-        // Replanificar con las tareas restantes
-        List<Tarea> tareasPendientes = obtenerTareasPorEstado(Estado.PENDIENTE);
-        List<Map<String, Object>> tareasProlog = convertirTareasAProlog(tareasPendientes);
-
         try {
+            Tarea tarea = obtenerTareaPorId(id);
+            tarea.setEstado(nuevoEstado);
+            tareaRepository.save(tarea);
+
+            // Replanificar con las tareas pendientes
+            List<Tarea> tareasPendientes = obtenerTareasPorEstado(Estado.PENDIENTE);
+            List<String> tareasProlog = convertirTareasAProlog(tareasPendientes);
+
+            // Enviar las tareas al motor Prolog
+            prologEngine.cargarTareasEnProlog(tareasProlog);
+
             String consultaProlog = "plan_optimo(TareasPendientes, Plan)";
             Query query = new Query(consultaProlog);
 
