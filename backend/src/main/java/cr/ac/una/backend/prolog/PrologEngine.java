@@ -41,7 +41,7 @@ public class PrologEngine {
     // Método específico para obtener un plan de tareas optimizado
     public List<Map<String, Term>> obtenerPlanDeTareas(List<Map<String, Object>> tareas) {
         try {
-            String consulta = "plan_optimo(Tareas, Plan)";
+            String consulta = "plan_optimo(Plan)";
             Query query = new Query(consulta);
             if (query.hasSolution()) {
                 return List.of(query.allSolutions());

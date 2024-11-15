@@ -3,6 +3,7 @@ package cr.ac.una.backend.service;
 import cr.ac.una.backend.entity.Dependencia;
 import cr.ac.una.backend.entity.Tarea;
 import cr.ac.una.backend.enumeration.Estado;
+import cr.ac.una.backend.enumeration.Prioridad;
 import cr.ac.una.backend.prolog.PrologEngine;
 import cr.ac.una.backend.prolog.PrologExecutionException;
 import cr.ac.una.backend.repository.DependenciaRepository;
@@ -36,7 +37,7 @@ public class TareaService {
 
     // Obtener todas las tareas
     public List<Tarea> obtenerTareas() {
-        return tareaRepository.findAll();
+        return tareaRepository.findByPrioridad(Prioridad.BAJA);
     }
 
     // Obtener una tarea por ID

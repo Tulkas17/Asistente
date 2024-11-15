@@ -20,25 +20,28 @@ prioridad_mayor(alta, media).
 prioridad_mayor(alta, baja).
 prioridad_mayor(media, baja).
 
-% Ordenar tareas por prioridad
-ordenar_por_prioridad(Tareas, TareasOrdenadas) :-
-    predsort(comparar_prioridades, Tareas, TareasOrdenadas).
+% Obtener todas las tareas de la base de conocimiento
+todas_las_tareas(Tareas) :-
+    findall(Tarea, tarea(Tarea, _, _, _, _), Tareas).
 
-comparar_prioridades(Delta, Tarea1, Tarea2) :-
-    tarea(Tarea1, Prioridad1, _, _, _),
-    tarea(Tarea2, Prioridad2, _, _, _),
-    (prioridad_mayor(Prioridad1, Prioridad2) -> Delta = '<' ; Delta = '>').
+% Filtrar tareas según condiciones climáticas
+tareas_cumplen_condiciones([], []).
+tareas_cumplen_condiciones([Tarea|Resto], [Tarea|Filtradas]) :-
+    condiciones_climaticas_cumplidas(Tarea),
+    tareas_cumplen_condiciones(Resto, Filtradas).
+tareas_cumplen_condiciones([_|Resto], Filtradas) :-
+    tareas_cumplen_condiciones(Resto, Filtradas).
 
 % Condiciones climáticas de tareas
 condiciones_climaticas_cumplidas(Tarea) :-
     tarea(Tarea, _, _, _, Condiciones),
     verificar_condiciones_climaticas(Condiciones).
 
-verificar_condiciones_climaticas([independiente]) :- !. % La condición 'independiente' siempre se cumple.
+verificar_condiciones_climaticas([independiente]) :- !.
 verificar_condiciones_climaticas(Condiciones) :-
     member(Condicion, Condiciones),
     clima_actual(Condicion),
-    !. % Este corte asegura que una vez que encontramos una condición climática que se cumple, no continuamos verificando.
+    !.
 
 % Estado actual del clima
 clima_actual(soleado).
@@ -53,33 +56,19 @@ agregar_dependencias([Tarea | Resto], Acumuladas, Todas) :-
     agregar_dependencias(Dependencias, NuevasAcumuladas, AcumuladasConDependencias),
     agregar_dependencias(Resto, AcumuladasConDependencias, Todas).
 
+% Ordenar tareas por prioridad
+ordenar_por_prioridad(Tareas, TareasOrdenadas) :-
+    predsort(comparar_prioridades, Tareas, TareasOrdenadas).
+
+comparar_prioridades(Delta, Tarea1, Tarea2) :-
+    tarea(Tarea1, Prioridad1, _, _, _),
+    tarea(Tarea2, Prioridad2, _, _, _),
+    (prioridad_mayor(Prioridad1, Prioridad2) -> Delta = '<' ; Delta = '>').
+
 % Construir el plan óptimo considerando dependencias y condiciones climáticas
-plan_optimo(TareasIniciales, Plan) :-
-    agregar_dependencias(TareasIniciales, TareasIniciales, TareasConDependencias),
-    write('Tareas con dependencias agregadas: '), writeln(TareasConDependencias),
-    ( condiciones_climaticas_cumplidas_para_lista(TareasConDependencias) ->
-        ordenar_por_prioridad(TareasConDependencias, Plan),
-        write('Plan óptimo generado: '), writeln(Plan)
-    ;   writeln('No se pudo generar un plan óptimo debido a condiciones climáticas no cumplidas.'),
-        fail
-    ).
+plan_optimo(Plan) :-
+    findall(Tarea, (tarea(Tarea, _, _, _, _), condiciones_climaticas_cumplidas(Tarea)), Tareas),
+    agregar_dependencias(Tareas, [], TodasTareas),
+    ordenar_por_prioridad(TodasTareas, Plan),
+    !.  % Este cut evita que Prolog siga generando soluciones adicionales
 
-condiciones_climaticas_cumplidas_para_lista([]).
-condiciones_climaticas_cumplidas_para_lista([Tarea | Resto]) :-
-    ( condiciones_climaticas_cumplidas(Tarea) ->
-        write('Condiciones climáticas cumplidas para la tarea: '), writeln(Tarea),
-        condiciones_climaticas_cumplidas_para_lista(Resto)
-    ;   write('Condiciones climáticas NO cumplidas para la tarea: '), writeln(Tarea),
-        fail
-    ).
-
-% Regla para verificar si el plan es posible
-% Similar a plan_optimo, pero falla explícitamente si alguna de las condiciones climáticas o dependencias no está satisfecha. Esto permite detectar que el plan no es posible y emita una alerta.
-plan_posible(TareasIniciales, Plan) :-
-    agregar_dependencias(TareasIniciales, TareasIniciales, TareasConDependencias),
-    ( condiciones_climaticas_cumplidas_para_lista(TareasConDependencias) ->
-        ordenar_por_prioridad(TareasConDependencias, Plan),
-        write('Plan óptimo generado: '), writeln(Plan)
-    ;   writeln('No se pudo generar un plan óptimo debido a condiciones climáticas no cumplidas o dependencias no satisfechas.'),
-        fail
-    ).
