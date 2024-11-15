@@ -310,8 +310,8 @@ const TaskList = () => {
           </AddTaskButton>
         </ButtonContainer>
       </HeaderContainer>
-      
-      {tasks.map(task => (
+
+      {tasks.map((task) => (
         <TaskCard key={task.id}>
           <TaskHeader>
             <TaskTitle>{task.nombre}</TaskTitle>
@@ -324,7 +324,7 @@ const TaskList = () => {
               </DeleteButton>
             </ButtonGroup>
           </TaskHeader>
-  
+
           <TaskDetails>
             <div>
               <PriorityIndicator>
@@ -338,12 +338,11 @@ const TaskList = () => {
               </StatusIndicator>
             </div>
             <div>
+              <span>Fecha de inicio: {new Date(task.fechaInicio).toLocaleString()}</span>
+              <br />
               <span>Fecha límite: {new Date(task.fechaLimite).toLocaleString()}</span>
               <br />
               <span>Tiempo estimado: {task.tiempoEstimado} hrs</span>
-            </div>
-            <div>
-              <span>Requisitos: {task.requisitos || 'Ninguno'}</span>
             </div>
             <div>
               <span>Condiciones climáticas: {task.condicionesClimaticas?.join(', ') || 'Ninguna'}</span>
@@ -351,16 +350,16 @@ const TaskList = () => {
             <div>
               <span>
                 Dependencias: {Array.isArray(task.dependencies) && task.dependencies.length > 0
-                  ? task.dependencies.map(dep => dep.tareaDependiente?.nombre).join(', ')
+                  ? task.dependencies.map((dep) => dep.tareaDependiente?.nombre).join(', ')
                   : 'Ninguna'}
               </span>
             </div>
           </TaskDetails>
         </TaskCard>
       ))}
-      
+
       {showModal && <TaskForm closeModal={closeModal} addTask={addTask} taskToEdit={taskToEdit} />}
-      
+
       {showConfirmModal && (
         <ConfirmModalOverlay>
           <ConfirmModalContainer>
@@ -373,7 +372,7 @@ const TaskList = () => {
         </ConfirmModalOverlay>
       )}
     </TaskContainer>
-  );  
+  );
 };
 
 export default TaskList;

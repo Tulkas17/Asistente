@@ -14,7 +14,7 @@ public class SwaggerConfig {
                 .info(new Info()
                         .title("API de Gestión de Tareas")
                         .version("1.0")
-                        .description("Documentación de la API para la gestión de tareas, dependencias y planificación.")
+                        .description("Para la gestión de tareas, dependencias y planificación.")
                 );
     }
 }

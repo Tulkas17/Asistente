@@ -69,10 +69,10 @@ const TaskForm = ({ closeModal, addTask, taskToEdit }) => {
     prioridad: 'ALTA',
     tiempoEstimado: '',
     fechaLimite: '',
-    requisitos: '',
+    fechaInicio: '',
+    estado: 'PENDIENTE',
     condicionesClimaticas: [],
     dependencias: [],
-    estado: 'PENDIENTE',
   });
 
   const [availableTasks, setAvailableTasks] = useState([]);
@@ -84,8 +84,9 @@ const TaskForm = ({ closeModal, addTask, taskToEdit }) => {
       setTaskData({
         ...taskToEdit,
         fechaLimite: taskToEdit.fechaLimite ? new Date(taskToEdit.fechaLimite).toISOString().slice(0, 16) : '',
-        dependencias: taskToEdit.dependencies ? taskToEdit.dependencies.map(dep => dep.tareaDependiente.id) : [],
+        fechaInicio: taskToEdit.fechaInicio ? new Date(taskToEdit.fechaInicio).toISOString().slice(0, 16) : '',
         condicionesClimaticas: taskToEdit.condicionesClimaticas || [],
+        dependencias: taskToEdit.dependencies?.map(dep => dep.tareaDependiente.id) || [],
       });
     }
   }, [taskToEdit]);
@@ -106,46 +107,41 @@ const TaskForm = ({ closeModal, addTask, taskToEdit }) => {
   };
 
   const handleDependencyChange = (taskId) => {
-    setTaskData((prevData) => {
-      const isChecked = prevData.dependencias.includes(taskId);
-      return {
-        ...prevData,
-        dependencias: isChecked
-          ? prevData.dependencias.filter((id) => id !== taskId)
-          : [...prevData.dependencias, taskId],
-      };
-    });
+    setTaskData(prevData => ({
+      ...prevData,
+      dependencias: prevData.dependencias.includes(taskId)
+        ? prevData.dependencias.filter(depId => depId !== taskId)
+        : [...prevData.dependencias, taskId],
+    }));
   };
 
   const handleClimaChange = (clima) => {
-    setTaskData((prevData) => {
-      const isChecked = prevData.condicionesClimaticas.includes(clima);
-      return {
-        ...prevData,
-        condicionesClimaticas: isChecked
-          ? prevData.condicionesClimaticas.filter((c) => c !== clima)
-          : [...prevData.condicionesClimaticas, clima],
-      };
-    });
+    setTaskData(prevData => ({
+      ...prevData,
+      condicionesClimaticas: prevData.condicionesClimaticas.includes(clima)
+        ? prevData.condicionesClimaticas.filter(c => c !== clima)
+        : [...prevData.condicionesClimaticas, clima],
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const fechaLimite = taskData.fechaLimite ? new Date(taskData.fechaLimite).toISOString() : null;
+      // Usar las fechas directamente del input, ya que están en el formato esperado
+      const fechaInicio = taskData.fechaInicio ? `${taskData.fechaInicio}:00` : null; // Añadir segundos si es necesario
+      const fechaLimite = taskData.fechaLimite ? `${taskData.fechaLimite}:00` : null;
   
-      // Crear el objeto con solo los campos necesarios
+      // Crear el objeto con los campos necesarios
       const taskDataWithDependencies = {
         id: taskToEdit ? taskToEdit.id : null,
         nombre: taskData.nombre,
         prioridad: taskData.prioridad,
-        tiempoEstimado: taskData.tiempoEstimado,
+        tiempoEstimado: parseFloat(taskData.tiempoEstimado), // Asegurar tipo numérico
+        fechaInicio,
         fechaLimite,
-        requisitos: taskData.requisitos,
         estado: taskData.estado,
         condicionesClimaticas: taskData.condicionesClimaticas,
         dependencias: taskData.dependencias.map((depId) => ({
-          tarea: { id: taskToEdit ? taskToEdit.id : null },
           tareaDependiente: { id: depId },
         })),
       };
@@ -190,12 +186,12 @@ const TaskForm = ({ closeModal, addTask, taskToEdit }) => {
             <StyledInput type="number" id="tiempoEstimado" name="tiempoEstimado" value={taskData.tiempoEstimado} onChange={handleChange} required />
           </div>
           <div className="mb-3">
-            <label htmlFor="fechaLimite">Fecha y Hora Límite</label>
-            <StyledInput type="datetime-local" id="fechaLimite" name="fechaLimite" value={taskData.fechaLimite} onChange={handleChange} required />
+            <label htmlFor="fechaInicio">Fecha y Hora de Inicio</label>
+            <StyledInput type="datetime-local" id="fechaInicio" name="fechaInicio" value={taskData.fechaInicio} onChange={handleChange} required />
           </div>
           <div className="mb-3">
-            <label htmlFor="requisitos">Requisitos Específicos</label>
-            <StyledInput as="textarea" id="requisitos" name="requisitos" value={taskData.requisitos} onChange={handleChange} rows="3" />
+            <label htmlFor="fechaLimite">Fecha y Hora Límite</label>
+            <StyledInput type="datetime-local" id="fechaLimite" name="fechaLimite" value={taskData.fechaLimite} onChange={handleChange} required />
           </div>
           <div className="mb-3">
             <label>Dependencias</label>
@@ -236,7 +232,7 @@ const TaskForm = ({ closeModal, addTask, taskToEdit }) => {
         </form>
       </FormContainer>
     </ModalOverlay>
-  );
+  );  
 };
 
 export default TaskForm;
